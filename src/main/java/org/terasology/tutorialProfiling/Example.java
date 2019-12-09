@@ -20,6 +20,7 @@ import org.terasology.entitySystem.systems.BaseComponentSystem;
 import org.terasology.entitySystem.systems.RegisterSystem;
 import org.terasology.logic.console.commandSystem.annotations.Command;
 import org.terasology.logic.console.commandSystem.annotations.CommandParam;
+import org.terasology.math.geom.Vector3i;
 
 /**
  *  This class contains examples of performance mistakes and how to improve
@@ -30,18 +31,35 @@ import org.terasology.logic.console.commandSystem.annotations.CommandParam;
 @RegisterSystem
 public class Example extends BaseComponentSystem {	
 	/**
-	 *  This command serves as an example/placeholder for how examples of
-	 *  what to do and what not to do may be created further down the line.
+	 *  This example shows 2 ways to iterate over vectors. The wrong way
+	 *  involves creating a new Vector3i every iteration, while the right
+	 *  way reuses the same object.
 	 *
-	 *  An example for examples, so to speak.
+	 *  It's important to note that in some cases, using the same object
+	 *  multiple times may not produce the desired behavior in cases where
+	 *  another object is instantiated which keeps the vector as an
+	 *  instance variable.
 	 */
-	@Command( shortDescription = "Placeholder performance example", helpText = "Doesn't do anything at the moment" )
+	@Command( shortDescription = "Vector iteration performance example", helpText = "Iterates over a large area through an efficient and inefficient way" )
 	public String testPerformancePlaceholder(@CommandParam( value = "Whether to use the efficient version or not" ) boolean efficient) {
 		long time = System.currentTimeMillis();
 		if(efficient) {
-			// Do it the right way
+			for(Vector3i vector = new Vector3i(0, 0, 0); vector.x < 1000; vector.x++) {
+				for(vector.y = 0; vector.y < 1000; vector.y++) {
+					for(vector.z = 0; vector.z < 1000; vector.z++) {
+						Math.abs(vector.x + vector.y + vector.z); // Operation inside the loop is unimportant
+					}
+				}
+			}
 		} else {
-			// Do it the wrong way
+			for(int x = 0; x < 1000; x++) {
+				for(int y=0; y < 1000; y++) {
+					for(int z=0; z < 1000; z+) {
+						Vector3i vector = new Vector3i(x, y, z);
+						Math.abs(vector.x + vector.y + vector.z);
+					}
+				}
+			}
 		}
 		time = System.currentTimeMillis() - time;
 		return "That took "+time+"ms";
