@@ -50,7 +50,7 @@ Instead of reading a log recorded by the application, it polls it for the curren
 
 <!-- The line gets increasingly blurry as Java 14 added streaming features to JFC, and JFR-over-JMX is expected. -->
 
-<!-- Footnote: -->
+#### Footnotes
 1. When you see “MBean Server” in Mission Control, it's referring to the same thing.
 Its JMX Console is the interface it provides to an application's MBean server. 
 
@@ -68,31 +68,70 @@ Unpack the archive and run the program inside:`jmc`
 
 ## Connecting to Terasology
 
+The JVM Browser in JMC shows all Java processes running on your computer:
+
+<img src="_media/JMC/JMC JVM Browser.webp" width="599" height="271" alt="Each is listed with its main class and process identifier. Selecting a process reveals several options." >
+
+Choose the MBean Server for the Terasology process.
+<img src="_media/JMC/JMC JMX Console - Default.halfsize.webp" width="344" height="300" style="float: right;" alt="The dashboard shows current memory and CPU usage on speedometer-style gauges, and charts recent values on line graphs.">
+
+This should take you to an Overview with charts showing the process's current resource usage.
+
+<br style="clear: both">
+
 ## Terasology's Metrics
 
-- adding custom charts
+By default, the Overview shows you some measurements common to all Java processes: Memory and CPU usage.
+What if we're interested in something else?
 
-## Adding a Connection
+We can create custom charts to include other metrics, including those unique to the Terasology engine.
+Please experiment here and make the charts your own, but a word of warning:
+_do not get too attached to your charts right now._
+There is a good chance that JMC will not save them.<sup>2</sup>
 
-### Creating a password file
+We'll talk about how to work around that later, but first let's find out what we can look at.
+Make sure you have a Terasology game running for this part;
+some metrics are only collected while a world is loaded, and won't show up if you're still at the main menu.
+
+Select the <b>MBean Browser</b> tab:
+
+<img src="_media/JMC/JMC MBean Browser - Filtered.webp" width="381" height="227" alt="The MBean Browser shows a tree with available MBeans, and the attributes of the selected entry.">
+
+Each MBean represents some value we can monitor.
+The **Filter** control lets us search them by name:
+for example, we can filter by `*fps` to find the entry for the engine's framerate.<sup>3</sup>  
+
+Right-click on its **Number** attribute, choose **Visualize**, and JMC will prompt you about adding it to a chart.
+
+#### Footnotes
+2. At least as of JMC 8.1.0, it seems to treat every process as unique. 
+When the current process ends and you connect to a different Terasology process later,
+it reverts to the default configuration.
+3. If your version has something named differently, it's okay.
+We haven't figured out how we're categorizing all these things yet.
+Regardless of the name, as long as it has a Number attached to it, you can chart it.
+
+# Adding a Connection
+
+## Creating a password file
 
 - create `jmxremote.password`
 
-### Setting the ports
+## Setting the ports
 
 - configuring the process
   - `gradle game --jmx-port`
   - with Terasology.bat or .sh: set `TERASOLOGY_OPTS`
   - with Launcher: ???
 
-### New Connection in JMC
+## New Connection in JMC
 
 - creating the connection
 - your charts should now be persistent
 
 # Remote Use
 
-- same process as “adding a connection”
+- set up jmx port, create Connection
 - use a SSH tunnel?
 
 
