@@ -111,28 +111,121 @@ it reverts to the default configuration.
 We haven't figured out how we're categorizing all these things yet.
 Regardless of the name, as long as it has a Number attached to it, you can chart it.
 
+
 # Adding a Connection
+
+The JVM browser gave us a quick way to get started,
+but if we're going to be using this often it helps to explicitly define a Connection.
+The two main benefits of this are:
+
+1. It's how we make connections remotely accessible.
+    This can be especially useful for troubleshooting a headless server.
+2. A named Connection keeps its configuration through restarts.
+    That's why it's helpful to set up even for local use.
+
+There some tools available to help configure this for a server running in a development workspace.
+An installed version can be configured this way too,
+it's just a little more verbose to do so.
 
 ## Creating a password file
 
-- create `jmxremote.password`
+First we set up the username and password that will secure the connection to the JMX server.
 
-## Setting the ports
+<div style="display: flex">
+<div>
 
-- configuring the process
-  - `gradle game --jmx-port`
-  - with Terasology.bat or .sh: set `TERASOLOGY_OPTS`
-  - with Launcher: ???
+If you are running a server from a **development workspace**:
+
+- run `gradlew jmxPassword`
+- edit `config/jmxremote.password`
+
+
+</div>
+<div>
+
+If you are running a server **without development sources**:
+
+- Find the [`jmxremote.password.template`][passwordTemplate] file.
+    You can use the linked version
+    or look in the `conf/management` subdirectory of your local Java installation.
+- Save a copy as `jmxremote.password` someplace that you can edit.
+- Set its file permissions so it is readable _only_ by its owner,
+    not open to other users on the system.
+
+[passwordTemplate]: https://raw.githubusercontent.com/openjdk/jdk/jdk-11%2B28/src/jdk.management.agent/share/conf/jmxremote.password.template
+</div>
+</div>
+
+For **all cases,** add a line (uncommented) to your `jmxremote.password` defining a password for `controlRole`.
+Change it to something other than the example `R&D`.
+
+
+## Setting Server Ports
+
+The JMX server needs two open ports.
+
+<div style="display: flex">
+<div>
+
+If you are running a server from a **development workspace**,
+add the `--jmx-port` parameter to the task when you start your game.
+For example:
+
+    gradlew game --jmx-port=8901
+
+Note that because JMX requires _two_ ports,
+the server in the above example will need both 8901 **and** 8902 to be available. 
+
+</div>
+<div>
+
+If you are starting the server **without development sources** from the `Terasology.bat` or `Terasology` script,
+you can configure Java options by setting the `TERASOLOGY_OPTS` environment variable:
+
+<code>TERASOLOGY_OPTS="-Dcom.sun.management.jmxremote.port=**8901**
+-Dcom.sun.management.jmxremote.rmi.port=**8902**
+-Dcom.sun.management.jmxremote.password.file=**config/jmxremote.password**
+-Dcom.sun.management.jmxremote.ssl=false"
+</code>
+
+Set the bold values (the two port numbers and the password filename) as appropriate for your environment.
+
+The specifics of how to set an environment variable and ensure it is available to the Terasology script 
+depend on your operating system and choice of command shell.
+
+</div>
+</div>
+
+<!-- TODO: Launcher? -->
+
 
 ## New Connection in JMC
 
 - creating the connection
 - your charts should now be persistent
 
-# Remote Use
 
-- set up jmx port, create Connection
-- use a SSH tunnel?
+# TODO: Remote Use
+
+_[🧩 Help with investigating and documenting this topic is welcome!]_
+
+We already set up the server to listen on network ports.
+
+We also want to
+- either set up SSL certificates
+  + likely requires more configuration for both JMC _and_ server, which sounds no fun
+- **or** make sure non-SSL ports are accessible _only_ on the loopback interface
+  + then set up an encrypted tunnel to them with ssh or …?
+
+
+#### What would be the risk of using unencrypted connections?
+
+The password provides some bit of protection,
+but it could be intercepted from an unencrypted connection.
+
+Worst case, an adversary with access to the port and the password can run arbitrary code in the server process.
+
+Do not expect Terasology's module sandbox to protect against code invoked by JMX.
 
 
 # Adding New Metrics to Terasology
