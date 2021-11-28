@@ -29,8 +29,8 @@ Here we'll be exploring a different feature of JMC, its JMX Console.<sup>1</sup>
 The JMX Console lets you see the _current state_ of a process.
 Instead of reading a log recorded by the application, it polls it for the current value of metrics you're interested in.
 
-<div style="display: flex">
-<div>
+<div style="display: flex; flex-wrap: wrap;">
+<div style="flex: 1 1 0;">
 
 **JFR**
 
@@ -38,7 +38,7 @@ Instead of reading a log recorded by the application, it polls it for the curren
 - 📥 can be attached to a bug report for later review
 
 </div>
-<div>
+<div style="flex: 1 1 0;">
 
 **JMX**
 
@@ -131,17 +131,16 @@ it's just a little more verbose to do so.
 
 First we set up the username and password that will secure the connection to the JMX server.
 
-<div style="display: flex">
-<div>
+<div style="display: flex; flex-wrap: wrap;">
+<div style="flex: 1 1 0;">
 
 If you are running a server from a **development workspace**:
 
 - run `gradlew jmxPassword`
 - edit `config/jmxremote.password`
 
-
 </div>
-<div>
+<div style="flex: 1 1 0;">
 
 If you are running a server **without development sources**:
 
@@ -164,8 +163,8 @@ Change it to something other than the example `R&D`.
 
 The JMX server needs two open ports.
 
-<div style="display: flex">
-<div>
+<div style="display: flex; flex-wrap: wrap;">
+<div style="flex: 1 1 0;">
 
 If you are running a server from a **development workspace**,
 add the `--jmx-port` parameter to the task when you start your game.
@@ -177,7 +176,7 @@ Note that because JMX requires _two_ ports,
 the server in the above example will need both 8901 **and** 8902 to be available. 
 
 </div>
-<div>
+<div style="flex: 1 1 0;">
 
 If you are starting the server **without development sources** from the `Terasology.bat` or `Terasology` script,
 you can configure Java options by setting the `TERASOLOGY_OPTS` environment variable:
