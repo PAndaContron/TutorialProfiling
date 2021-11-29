@@ -131,18 +131,14 @@ it's just a little more verbose to do so.
 
 First we set up the username and password that will secure the connection to the JMX server.
 
-<div style="display: flex; flex-wrap: wrap;">
-<div style="flex: 1 1 0;">
+<!-- tabs:start -->
 
-If you are running a server from a **development workspace**:
+### **Source**
 
 - run `gradlew jmxPassword`
 - edit `config/jmxremote.password`
 
-</div>
-<div style="flex: 1 1 0;">
-
-If you are running a server **without development sources**:
+### **Installation**
 
 - Find the [`jmxremote.password.template`][passwordTemplate] file.
     You can use the linked version
@@ -152,10 +148,10 @@ If you are running a server **without development sources**:
     not open to other users on the system.
 
 [passwordTemplate]: https://raw.githubusercontent.com/openjdk/jdk/jdk-11%2B28/src/jdk.management.agent/share/conf/jmxremote.password.template
-</div>
-</div>
 
-For **all cases,** add a line (uncommented) to your `jmxremote.password` defining a password for `controlRole`.
+<!-- tabs:end -->
+
+Add a line (uncommented) to your `jmxremote.password` defining a password for `controlRole`.
 Change it to something other than the example `R&D`.
 
 
@@ -163,11 +159,11 @@ Change it to something other than the example `R&D`.
 
 The JMX server needs two open ports.
 
-<div style="display: flex; flex-wrap: wrap;">
-<div style="flex: 1 1 0;">
+<!-- tabs:start -->
 
-If you are running a server from a **development workspace**,
-add the `--jmx-port` parameter to the task when you start your game.
+### **Source**
+
+Add the `--jmx-port` parameter to the task when you start your game.
 For example:
 
     gradlew game --jmx-port=8901
@@ -175,16 +171,16 @@ For example:
 Note that because JMX requires _two_ ports,
 the server in the above example will need both 8901 **and** 8902 to be available. 
 
-</div>
-<div style="flex: 1 1 0;">
 
-If you are starting the server **without development sources** from the `Terasology.bat` or `Terasology` script,
+### **Installation**
+
+If you are starting the server from the `Terasology.bat` or `Terasology` script,
 you can configure Java options by setting the `TERASOLOGY_OPTS` environment variable:
 
-<code>TERASOLOGY_OPTS="-Dcom.sun.management.jmxremote.port=**8901**
--Dcom.sun.management.jmxremote.rmi.port=**8902**
--Dcom.sun.management.jmxremote.password.file=**config/jmxremote.password**
--Dcom.sun.management.jmxremote.ssl=false"
+<code>TERASOLOGY_OPTS="-Dcom.sun.management.jmxremote.port=**8901**  
+  -Dcom.sun.management.jmxremote.rmi.port=**8902**  
+  -Dcom.sun.management.jmxremote.password.file=**config/jmxremote.password**    
+  -Dcom.sun.management.jmxremote.ssl=false"
 </code>
 
 Set the bold values (the two port numbers and the password filename) as appropriate for your environment.
@@ -192,8 +188,7 @@ Set the bold values (the two port numbers and the password filename) as appropri
 The specifics of how to set an environment variable and ensure it is available to the Terasology script 
 depend on your operating system and choice of command shell.
 
-</div>
-</div>
+<!-- tabs:end -->
 
 <!-- TODO: Launcher? -->
 
