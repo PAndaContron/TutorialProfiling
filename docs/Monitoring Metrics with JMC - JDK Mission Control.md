@@ -1,5 +1,7 @@
 # Monitoring Metrics with JMC <small>(JDK Mission Control)</small>
 
+<!-- This Markdown file contains tabs to be rendered with https://jhildenbiddle.github.io/docsify-tabs/ -->
+
 <video muted autoplay loop style="width: 100%" poster="_media/frame.jpg">
     <source type="video/mp4;codecs=vp9"
         src="https://user-images.githubusercontent.com/83819/142078723-d1d52394-5f13-4b2d-a7b2-120bbc01013f.mp4">
@@ -195,9 +197,26 @@ depend on your operating system and choice of command shell.
 
 ## New Connection in JMC
 
-- creating the connection
-- your charts should now be persistent
+<img src="_media/JMC/JMC%20New%20Connection.webp" width="514" height="478" style="float: right;" alt="JMC's New Connection dialog prompts for host, port, user, and password." />
 
+We've configured Terasology to listen for JMX connections on a known port.
+Now, instead of using the JVM Browser to choose a running program based on its process ID,
+we will create a **New Connection**.  
+
+- **Host** can remain `localhost` for now.
+- **Port** is the value you passed to `--jmx-port`.
+    In the example we've been using, that's `8091`.
+- **User** is `controlRole`.
+- **Password** is the password you set in your `jmxremote.password` file for `controlRole`.
+
+Use the **Test connection** button while Terasology is running to test these settings.
+
+When we use this connection by name, JMC is better at keeping the changes we make in its JMX Console.
+
+Try it out: Make a change to the dashboard or your charts, restart Terasology, then connect to it again. 
+Confirm that your dashboards and charts are still showing the metrics and labels you configured.
+
+<br style="clear: both">
 
 # TODO: Remote Use
 
