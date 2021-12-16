@@ -75,6 +75,7 @@ The JVM Browser in JMC shows all Java processes running on your computer:
 <img src="_media/JMC/JMC JVM Browser.webp" width="599" height="271" alt="Each is listed with its main class and process identifier. Selecting a process reveals several options." >
 
 Choose the MBean Server for the Terasology process.
+
 <img src="_media/JMC/JMC JMX Console - Default.halfsize.webp" width="344" height="300" style="float: right;" alt="The dashboard shows current memory and CPU usage on speedometer-style gauges, and charts recent values on line graphs.">
 
 This should take you to an Overview with charts showing the process's current resource usage.
