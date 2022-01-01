@@ -2,9 +2,8 @@
 
 <!-- This Markdown file contains tabs to be rendered with https://jhildenbiddle.github.io/docsify-tabs/ -->
 
-<video muted autoplay loop style="width: 100%" poster="_media/frame.jpg">
-    <source type="video/mp4;codecs=vp9"
-        src="https://user-images.githubusercontent.com/83819/142078723-d1d52394-5f13-4b2d-a7b2-120bbc01013f.mp4">
+<video muted autoplay loop style="width: 100%" poster="_media/JMC/JMX Demo.webp">
+    <source type="video/webm;codecs=vp9" src="_media/JMC/JMX Demo.webm">
 </video>
 
 # Introduction
