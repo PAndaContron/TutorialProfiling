@@ -24,20 +24,20 @@
         themeColor: '#08A045',
         loadSidebar: true,
         search: 'auto',
-        homepage: 'https://raw.githubusercontent.com/Terasology/TutorialProfiling/develop/README.md',
+        homepage: 'https://raw.githubusercontent.com/Terasology/TutorialProfiling/master/README.md',
         pagination: {
             crossChapter: true,
             crossChapterText: true,
         },
         plugins: [
             EditOnGithubPlugin.create(
-                "https://github.com/Terasology/TutorialProfiling/tree/develop/docs/"
+                "https://github.com/Terasology/TutorialProfiling/tree/master/docs/"
             ),
             function (hook) {
                 // this "fixes" the relative links in the README which is loaded from remote (see 'homepage' above)
                 hook.beforeEach(function (content) {
                     return content
-                        .replace(new RegExp("https://raw.githubusercontent.com/Terasology/TutorialProfiling/develop/docs/"), "")
+                        .replace(new RegExp("https://raw.githubusercontent.com/Terasology/TutorialProfiling/master/docs/"), "")
                         .replace(new RegExp("./docs/"), "");
                 })
             }
